@@ -36,11 +36,12 @@ class ThicknessVariable:
     """
     shape variables are ESP/CAPS despmtr variables, etc.
     """
-    def __init__(self, name:str, caps_group:str, value:float, material:Material):
+    def __init__(self, name:str, caps_group:str, value:float, material:Material, bending_boost:float=1.0):
         self._name = name
         self._caps_group = caps_group
         self._value = value
         self._material = material
+        self._bending_boost = bending_boost
 
     @property
     def name(self) -> str:
@@ -87,7 +88,7 @@ class ThicknessVariable:
     @property
     def shell_property(self) -> ShellProperty:
         assert(self._material is not None)
-        return ShellProperty(caps_group=self._caps_group, material=self._material, membrane_thickness=self._value)
+        return ShellProperty(caps_group=self._caps_group, material=self._material, membrane_thickness=self._value, bending_inertia=self._bending_boost)
 
     @property
     def is_thickness_DV(self) -> bool:
